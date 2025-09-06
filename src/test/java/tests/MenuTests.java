@@ -1,5 +1,4 @@
 package tests;
-
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -14,9 +13,9 @@ public class MenuTests {
     public void setUp() {
         LoginPage login = new LoginPage();
         login.open();
-        login.waitFor(2); // wait for page load
+        login.waitFor(2);
         login.login("standard_user", "secret_sauce");
-        login.waitFor(3); // wait after login
+        login.waitFor(3); 
     }
 
     @AfterMethod
@@ -27,10 +26,9 @@ public class MenuTests {
     @Test
     public void verifyUserCanLogout() {
         DriverFactory.getDriver().findElement(By.id("react-burger-menu-btn")).click();
-        new LoginPage().waitFor(2); // wait for menu to open
+        new LoginPage().waitFor(2); 
         DriverFactory.getDriver().findElement(By.id("logout_sidebar_link")).click();
-        new LoginPage().waitFor(3); // wait after logout
-
+        new LoginPage().waitFor(3); 
         Assert.assertTrue(DriverFactory.getDriver().getCurrentUrl().contains("saucedemo.com"),
                 "Logout did not return to login page");
     }
@@ -38,26 +36,21 @@ public class MenuTests {
     @Test
     public void verifyAboutLink() {
         DriverFactory.getDriver().findElement(By.id("react-burger-menu-btn")).click();
-        new LoginPage().waitFor(2); // wait for menu to open
+        new LoginPage().waitFor(2); 
         DriverFactory.getDriver().findElement(By.id("about_sidebar_link")).click();
-        new LoginPage().waitFor(4); // wait for page to load
-
+        new LoginPage().waitFor(4); 
         Assert.assertTrue(DriverFactory.getDriver().getCurrentUrl().contains("saucelabs.com"),
                 "About link did not redirect to Sauce Labs site");
     }
 
     @Test
     public void verifyResetAppState() {
-        // Add product to cart first
         DriverFactory.getDriver().findElement(By.id("add-to-cart-sauce-labs-backpack")).click();
-        new LoginPage().waitFor(2); // wait after adding product
-
-        // Reset app state from menu
+        new LoginPage().waitFor(2); 
         DriverFactory.getDriver().findElement(By.id("react-burger-menu-btn")).click();
-        new LoginPage().waitFor(2); // wait for menu
+        new LoginPage().waitFor(2); 
         DriverFactory.getDriver().findElement(By.id("reset_sidebar_link")).click();
-        new LoginPage().waitFor(2); // wait after reset
-
+        new LoginPage().waitFor(2); 
         boolean badgePresent = DriverFactory.getDriver().findElements(By.className("shopping_cart_badge")).size() > 0;
         Assert.assertFalse(badgePresent, "Cart not cleared after Reset App State");
     }
@@ -65,14 +58,12 @@ public class MenuTests {
     @Test
     public void verifyAllMenuOptionsVisible() {
         DriverFactory.getDriver().findElement(By.id("react-burger-menu-btn")).click();
-        new LoginPage().waitFor(2); // wait for menu to open
-
+        new LoginPage().waitFor(2); 
         boolean allVisible =
                 DriverFactory.getDriver().findElement(By.id("about_sidebar_link")).isDisplayed() &&
                 DriverFactory.getDriver().findElement(By.id("logout_sidebar_link")).isDisplayed() &&
                 DriverFactory.getDriver().findElement(By.id("reset_sidebar_link")).isDisplayed();
-
-        new LoginPage().waitFor(2); // pause to show menu items
+        new LoginPage().waitFor(2); 
         Assert.assertTrue(allVisible, "Not all menu options are visible");
     }
 }

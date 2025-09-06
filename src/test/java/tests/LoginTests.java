@@ -1,5 +1,4 @@
 package tests;
-
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
@@ -17,9 +16,9 @@ public class LoginTests {
     public void validLogin() {
         LoginPage login = new LoginPage();
         login.open();
-        login.waitFor(2); // wait for page load
+        login.waitFor(2); 
         login.login("standard_user", "secret_sauce");
-        login.waitFor(3); // wait after login
+        login.waitFor(3);
         Assert.assertTrue(DriverFactory.getDriver().getCurrentUrl().contains("inventory.html"));
     }
 
@@ -29,7 +28,7 @@ public class LoginTests {
         login.open();
         login.waitFor(2);
         login.login("wrong_user", "secret_sauce");
-        login.waitFor(2); // wait for error message
+        login.waitFor(2);
         Assert.assertTrue(login.getErrorMessage().contains("Epic sadface"));
     }
 
@@ -69,7 +68,7 @@ public class LoginTests {
         login.open();
         login.waitFor(2);
         login.login("performance_glitch_user", "secret_sauce");
-        login.waitFor(4); // extra wait since glitch user loads slowly
+        login.waitFor(4);
         Assert.assertTrue(DriverFactory.getDriver().getCurrentUrl().contains("inventory.html"));
     }
 
@@ -81,7 +80,6 @@ public class LoginTests {
         login.login("wrong_user", "wrong_pass");
         login.waitFor(2);
         Assert.assertTrue(login.getErrorMessage().contains("Epic sadface"));
-
         login.open();
         login.waitFor(2);
         login.login("standard_user", "secret_sauce");

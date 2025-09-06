@@ -1,5 +1,4 @@
 package tests;
-
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -14,7 +13,7 @@ public class UITests {
     public void setUp() {
         LoginPage login = new LoginPage();
         login.open();
-        login.waitFor(2); // wait for login page to load
+        login.waitFor(2);
     }
 
     @AfterMethod
@@ -24,9 +23,7 @@ public class UITests {
 
     @Test
     public void verifyLoginPageUIElements() {
-        // Pause to show UI
         new LoginPage().waitFor(2);
-
         Assert.assertTrue(DriverFactory.getDriver().findElement(By.className("login_logo")).isDisplayed(),
                 "Logo not visible");
         Assert.assertTrue(DriverFactory.getDriver().findElement(By.id("user-name")).isDisplayed(),
@@ -35,21 +32,18 @@ public class UITests {
                 "Password field missing");
         Assert.assertTrue(DriverFactory.getDriver().findElement(By.id("login-button")).isDisplayed(),
                 "Login button missing");
-
-        new LoginPage().waitFor(2); // pause after checks
+        new LoginPage().waitFor(2); 
     }
 
     @Test
     public void verifyFooterLinks() {
         LoginPage login = new LoginPage();
         login.login("standard_user", "secret_sauce");
-        login.waitFor(3); // wait for inventory page to load
-
+        login.waitFor(3); 
         boolean twitter = DriverFactory.getDriver().findElement(By.linkText("Twitter")).isDisplayed();
         boolean facebook = DriverFactory.getDriver().findElement(By.linkText("Facebook")).isDisplayed();
         boolean linkedIn = DriverFactory.getDriver().findElement(By.linkText("LinkedIn")).isDisplayed();
-
-        login.waitFor(2); // pause to show footer links
+        login.waitFor(2); 
         Assert.assertTrue(twitter && facebook && linkedIn, "One or more footer links are missing");
     }
 
@@ -57,19 +51,13 @@ public class UITests {
     public void verifyBackButtonAfterLogout() {
         LoginPage login = new LoginPage();
         login.login("standard_user", "secret_sauce");
-        login.waitFor(3); // wait for inventory page
-
-        // Logout
+        login.waitFor(3);
         DriverFactory.getDriver().findElement(By.id("react-burger-menu-btn")).click();
-        login.waitFor(2); // wait for menu to open
+        login.waitFor(2); 
         DriverFactory.getDriver().findElement(By.id("logout_sidebar_link")).click();
-        login.waitFor(3); // wait after logout
-
-        // Press browser back
+        login.waitFor(3);        
         DriverFactory.getDriver().navigate().back();
-        login.waitFor(3); // wait for back navigation
-
-        // Still should be on login page
+        login.waitFor(3); 
         Assert.assertTrue(DriverFactory.getDriver().getCurrentUrl().contains("saucedemo.com"),
                 "User able to access app after logout via back button");
     }
@@ -78,19 +66,14 @@ public class UITests {
     public void verifyPageTitleAndLogoConsistency() {
         LoginPage login = new LoginPage();
         login.login("standard_user", "secret_sauce");
-        login.waitFor(3); // wait for inventory page
-
+        login.waitFor(3); 
         String title1 = DriverFactory.getDriver().getTitle();
         String logo1 = DriverFactory.getDriver().findElement(By.className("app_logo")).getText();
-        login.waitFor(2); // pause to show title & logo
-
-        // Navigate to cart page
+        login.waitFor(2); 
         DriverFactory.getDriver().findElement(By.className("shopping_cart_link")).click();
-        login.waitFor(3); // wait for cart page
-
+        login.waitFor(3);
         String title2 = DriverFactory.getDriver().getTitle();
         String logo2 = DriverFactory.getDriver().findElement(By.className("app_logo")).getText();
-
         Assert.assertEquals(title1, title2, "Page title not consistent");
         Assert.assertEquals(logo1, logo2, "Logo not consistent");
     }

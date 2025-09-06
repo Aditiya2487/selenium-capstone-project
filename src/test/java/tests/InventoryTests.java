@@ -1,5 +1,4 @@
 package tests;
-
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -14,9 +13,9 @@ public class InventoryTests {
     public void setUp() {
         LoginPage login = new LoginPage();
         login.open();
-        login.waitFor(2); // wait for page load
+        login.waitFor(2);
         login.login("standard_user", "secret_sauce");
-        login.waitFor(3); // wait after login
+        login.waitFor(3); 
     }
 
     @AfterMethod
@@ -35,7 +34,7 @@ public class InventoryTests {
     public void addSingleProductToCart() {
         InventoryPage inventory = new InventoryPage();
         inventory.addBackpackToCart();
-        inventory.waitFor(3); // wait after adding product
+        inventory.waitFor(3); 
         Assert.assertTrue(DriverFactory.getDriver().getPageSource().contains("Remove"),
                 "Product not added to cart");
     }
@@ -45,11 +44,10 @@ public class InventoryTests {
         InventoryPage inventory = new InventoryPage();
         inventory.addBackpackToCart();
         inventory.waitFor(2);
-        // Add another item dynamically (example: Sauce Labs Bike Light)
         DriverFactory.getDriver().findElement(
                 org.openqa.selenium.By.xpath("//div[text()='Sauce Labs Bike Light']/ancestor::div[@class='inventory_item']//button")
         ).click();
-        inventory.waitFor(3); // wait after adding 2nd product
+        inventory.waitFor(3); 
         Assert.assertTrue(DriverFactory.getDriver().getPageSource().contains("Remove"),
                 "Multiple products not added correctly");
     }
@@ -59,11 +57,10 @@ public class InventoryTests {
         InventoryPage inventory = new InventoryPage();
         inventory.addBackpackToCart();
         inventory.waitFor(2);
-        // Remove item
         DriverFactory.getDriver().findElement(
                 org.openqa.selenium.By.xpath("//div[text()='Sauce Labs Backpack']/ancestor::div[@class='inventory_item']//button")
         ).click();
-        inventory.waitFor(3); // wait after removing
+        inventory.waitFor(3);
         Assert.assertFalse(DriverFactory.getDriver().getPageSource().contains("Remove"),
                 "Product was not removed successfully");
     }
@@ -73,7 +70,7 @@ public class InventoryTests {
         org.openqa.selenium.support.ui.Select sortDropdown =
                 new org.openqa.selenium.support.ui.Select(DriverFactory.getDriver().findElement(org.openqa.selenium.By.className("product_sort_container")));
         sortDropdown.selectByVisibleText("Name (A to Z)");
-        new InventoryPage().waitFor(3); // wait for sort effect
+        new InventoryPage().waitFor(3); 
         Assert.assertTrue(true, "Products sorted by Name A-Z (manual visual validation)");
     }
 
